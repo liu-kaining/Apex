@@ -23,6 +23,7 @@ from pipeline_common import (
     TICKERS_OUTPUT_DIR,
     load_investors,
     normalize_cik,
+    normalize_ticker_symbol,
 )
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -47,10 +48,9 @@ def build_timelines(
         firm = portfolio.get("firm") or portfolio.get("cik")
         report_date = portfolio.get("filing", {}).get("reportDate", "")
         for h in portfolio.get("holdings", []):
-            ticker = h.get("ticker")
-            if not ticker:
+            sym = normalize_ticker_symbol(h.get("ticker"))
+            if not sym:
                 continue
-            sym = str(ticker).upper()
             if h.get("nameOfIssuer"):
                 names[sym] = str(h["nameOfIssuer"])
             if not h.get("passesRule2", True):
@@ -68,7 +68,7 @@ def build_timelines(
             )
 
     for signal in feed.get("signals", []):
-        sym = str(signal.get("ticker", "")).upper()
+        sym = normalize_ticker_symbol(signal.get("ticker"))
         if not sym:
             continue
         names.setdefault(sym, signal.get("companyName", sym))

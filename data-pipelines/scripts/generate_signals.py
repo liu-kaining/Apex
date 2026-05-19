@@ -25,6 +25,7 @@ from pipeline_common import (
     THIRTEEN_F_BY_CIK_DIR,
     load_investors,
     normalize_cik,
+    normalize_ticker_symbol,
 )
 
 logging.basicConfig(
@@ -116,10 +117,9 @@ def build_ticker_index(
         }
         seen_tickers: set[str] = set()
         for h in portfolio.get("holdings", []):
-            ticker = h.get("ticker")
-            if not ticker:
+            sym = normalize_ticker_symbol(h.get("ticker"))
+            if not sym:
                 continue
-            sym = str(ticker).upper().strip()
             if sym in seen_tickers:
                 continue
             seen_tickers.add(sym)

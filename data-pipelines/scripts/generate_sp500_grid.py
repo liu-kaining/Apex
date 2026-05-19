@@ -18,6 +18,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 from pipeline_common import (
+    normalize_ticker_symbol,
     SP500_GRID_PATH,
     SP500_TICKERS_PATH,
     THIRTEEN_F_BY_CIK_DIR,
@@ -67,10 +68,9 @@ def build_grid(
     for portfolio in portfolios:
         cik = portfolio.get("cik")
         for h in portfolio.get("holdings", []):
-            ticker = h.get("ticker")
-            if not ticker:
+            sym = normalize_ticker_symbol(h.get("ticker"))
+            if not sym:
                 continue
-            sym = str(ticker).upper()
             if universe and sym not in universe:
                 continue
 

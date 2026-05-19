@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 
@@ -26,6 +27,9 @@ CUSIP_CACHE_PATH = CONFIG_DIR / "cusip_ticker_cache.json"
 SP500_TICKERS_PATH = CONFIG_DIR / "sp500_tickers.json"
 
 DEFAULT_SEC_USER_AGENT = "Apex_Data_Bot/1.0 (contact@thetamind.ai)"
+
+# US equity-style symbols safe for URLs and tickers/*.json filenames
+VALID_TICKER_RE = re.compile(r"^[A-Z][A-Z0-9.-]{0,14}$")
 
 
 def load_dotenv_files() -> None:
@@ -91,6 +95,20 @@ def load_investors(*, require_cik: bool = True) -> list[dict[str, Any]]:
     if require_cik:
         investors = [i for i in investors if i.get("cik")]
     return investors
+
+
+def normalize_ticker_symbol(ticker: str | None) -> str | None:
+    """
+    Normalize a holding/signal symbol for grid, feed, and static JSON paths.
+    Returns None for bonds, preferreds, or other non-equity labels from CUSIP mapping
+    (e.g. 'BILL 0 04/01/30').
+    """
+    if ticker is None:
+        return None
+    sym = str(ticker).upper().strip()
+    if not sym or not VALID_TICKER_RE.fullmatch(sym):
+        return None
+    return sym
 
 
 def normalize_cik(cik: str) -> str:

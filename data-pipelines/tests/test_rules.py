@@ -18,9 +18,20 @@ from generate_signals import (  # noqa: E402
     apply_resonance,
     filter_signals_by_insider_recency,
 )
+from pipeline_common import normalize_ticker_symbol  # noqa: E402
 from rule2 import classify_qoq, passes_rule2  # noqa: E402
 
 FIXTURES = Path(__file__).parent / "fixtures"
+
+
+class TestNormalizeTickerSymbol:
+    def test_accepts_common_equity(self):
+        assert normalize_ticker_symbol("aapl") == "AAPL"
+        assert normalize_ticker_symbol("BRK.B") == "BRK.B"
+
+    def test_rejects_bond_style_labels(self):
+        assert normalize_ticker_symbol("BILL 0 04/01/30") is None
+        assert normalize_ticker_symbol("") is None
 
 
 class TestRule3InsiderBuy:
