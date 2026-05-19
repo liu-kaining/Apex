@@ -65,7 +65,9 @@
 ### 2.3 Cloudflare R2 配置
 
 1. **创建 Bucket**（例如 `apex-data`）。
-2. **创建 R2 API Token**（Object Read & Write）。
+2. **创建 R2 API Token**  
+   - **上传对象**：Object Read & Write 即可（`upload_to_r2.py`）  
+   - **脚本自动配 CORS**（`apply_r2_cors.py`）：需要 **Admin Read & Write**；若只有 Object 权限会 `AccessDenied`，请在 Dashboard 手动配 CORS（见 2.4）
 3. 记录：
    - Account ID → `R2_ACCOUNT_ID`
    - Access Key ID → `R2_ACCESS_KEY_ID`
