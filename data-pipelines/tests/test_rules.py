@@ -57,6 +57,17 @@ class TestRule3InsiderBuy:
         }
         assert passes_rule_3_insider_buy_filter(row) is False
 
+    def test_accepts_stable_latest_shape_without_acq_field(self):
+        """FMP stable /insider-trading/latest omits acqOrDisp; P-Purchase is enough."""
+        row = {
+            "symbol": "MSFT",
+            "transactionType": "P-Purchase",
+            "securityName": "Common Stock",
+            "securitiesTransacted": 10000,
+            "price": 400,
+        }
+        assert passes_rule_3_insider_buy_filter(row) is True
+
 
 class TestRule2Conviction:
     def test_weight_above_one_percent(self):

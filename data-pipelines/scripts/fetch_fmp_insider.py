@@ -29,7 +29,8 @@ ACQUIRE_CODE = "A"
 PURCHASE_TYPE = "P"
 COMMON_STOCK_KEYWORD = "common stock"
 
-FMP_BASE_URL = "https://financialmodelingprep.com/api/v4/insider-trading"
+# FMP stable API (legacy /api/v4/* retired for new subscriptions after 2025-08-31)
+FMP_BASE_URL = "https://financialmodelingprep.com/stable/insider-trading/latest"
 DEFAULT_LIMIT = 1000
 DEFAULT_PAGE_SIZE = 100
 MAX_RETRIES = 5
@@ -86,8 +87,12 @@ def _load_api_key() -> str:
 
 
 def _normalize_acq_or_disp(record: dict[str, Any]) -> str | None:
-    """FMP may return acqOrDisp or the misspelled acquistionOrDisposition."""
-    raw = record.get("acqOrDisp") or record.get("acquistionOrDisposition")
+    """Legacy v4 and stable may use different field names."""
+    raw = (
+        record.get("acqOrDisp")
+        or record.get("acquistionOrDisposition")
+        or record.get("acquisitionOrDisposition")
+    )
     if raw is None:
         return None
     return str(raw).strip().upper()
@@ -127,8 +132,14 @@ def passes_rule_3_insider_buy_filter(record: dict[str, Any]) -> bool:
     """
     PRD Rule 3: acqOrDisp == 'A', transactionType == 'P',
     securityName contains 'Common Stock', amount >= $50,000.
+
+    Stable API often omits acquisition/disposition; then we rely on
+  transactionType (e.g. P-Purchase) only.
     """
-    if _normalize_acq_or_disp(record) != ACQUIRE_CODE:
+    acq = _normalize_acq_or_disp(record)
+    if acq == "D":
+        return False
+    if acq is not None and acq != ACQUIRE_CODE:
         return False
 
     if _normalize_transaction_type(record) != PURCHASE_TYPE:
@@ -199,7 +210,21 @@ def _request_with_retry(
             continue
 
         if response.status_code in (401, 403):
-            raise FMPAuthError(f"FMP authentication failed ({response.status_code}). Check FMP_API_KEY.")
+            err_text = response.text[:500]
+            try:
+                err_json = response.json()
+                if isinstance(err_json, dict) and err_json.get("Error Message"):
+                    err_text = str(err_json["Error Message"])
+            except json.JSONDecodeError:
+                pass
+            if "Legacy Endpoint" in err_text:
+                raise FMPClientError(
+                    f"FMP legacy API blocked: {err_text} "
+                    "Use stable endpoints — see https://site.financialmodelingprep.com/developer/docs"
+                )
+            raise FMPAuthError(
+                f"FMP authentication failed ({response.status_code}): {err_text}"
+            )
 
         if response.status_code >= 500:
             if attempt == MAX_RETRIES:
@@ -234,7 +259,7 @@ def fetch_insider_trading(
     limit: int = DEFAULT_LIMIT,
     page_size: int = DEFAULT_PAGE_SIZE,
 ) -> list[dict[str, Any]]:
-    """Paginate through FMP /v4/insider-trading with rate limiting."""
+    """Paginate through FMP stable /insider-trading/latest with rate limiting."""
     session = requests.Session()
     session.headers.update({"Accept": "application/json", "User-Agent": "Apex-ETL/1.0"})
 

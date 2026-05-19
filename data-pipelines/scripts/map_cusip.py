@@ -29,7 +29,7 @@ from pipeline_common import (
     load_dotenv_files,
 )
 
-FMP_CUSIP_URL = "https://financialmodelingprep.com/api/v3/cusip/{cusip}"
+FMP_CUSIP_URL = "https://financialmodelingprep.com/stable/search-cusip"
 OPENFIGI_URL = "https://api.openfigi.com/v3/mapping"
 MAX_RETRIES = 4
 INITIAL_BACKOFF_SEC = 2.0
@@ -79,7 +79,7 @@ class CusipTickerMapper:
             return
         self.cache_path.parent.mkdir(parents=True, exist_ok=True)
         payload = {
-            "description": "CUSIP → ticker cache (FMP /api/v3/cusip)",
+            "description": "CUSIP → ticker cache (FMP stable /search-cusip)",
             "entries": self._cache,
         }
         with self.cache_path.open("w", encoding="utf-8") as fh:
@@ -162,13 +162,14 @@ class CusipTickerMapper:
         }
 
     def _fetch_from_fmp(self, cusip: str) -> dict[str, Any]:
-        url = FMP_CUSIP_URL.format(cusip=cusip)
-        params = {"apikey": self.api_key}
+        params = {"cusip": cusip, "apikey": self.api_key}
         backoff = INITIAL_BACKOFF_SEC
 
         for attempt in range(1, MAX_RETRIES + 1):
             try:
-                resp = requests.get(url, params=params, timeout=REQUEST_TIMEOUT_SEC)
+                resp = requests.get(
+                    FMP_CUSIP_URL, params=params, timeout=REQUEST_TIMEOUT_SEC
+                )
             except requests.RequestException as exc:
                 if attempt == MAX_RETRIES:
                     logger.error("FMP CUSIP lookup failed for %s: %s", cusip, exc)
