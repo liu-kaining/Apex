@@ -3,6 +3,9 @@
     {
       "AllowedOrigins": [
         "https://apex.thetamind.ai",
+        "http://apex.thetamind.ai",
+        "https://www.apex.thetamind.ai",
+        "https://liu-kaining.github.io",
         "https://apex-data.thetamind.ai",
         "http://localhost:3000"
       ],
