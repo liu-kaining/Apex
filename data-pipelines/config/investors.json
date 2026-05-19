@@ -1,0 +1,544 @@
+{
+  "source": "https://www.dataroma.com/m/home.php",
+  "description": "Superinvestor whitelist (Rule 1) aligned with Dataroma's 80 tracked portfolios. Use dataromaCode for cross-reference; cik for SEC EDGAR 13F and FMP institutional APIs.",
+  "lastSynced": "2026-05-19T12:31:52Z",
+  "count": 80,
+  "investors": [
+    {
+      "dataromaCode": "HH",
+      "displayName": "Duan Yongping - H&H International Investment",
+      "firm": "H&H International Investment",
+      "cik": "0001759767",
+      "manager": "Duan Yongping"
+    },
+    {
+      "dataromaCode": "TF",
+      "displayName": "Nelson Peltz - Trian Fund Management",
+      "firm": "Trian Fund Management",
+      "cik": "0001340287",
+      "manager": "Nelson Peltz"
+    },
+    {
+      "dataromaCode": "mc",
+      "displayName": "Lee Ainslie - Maverick Capital",
+      "firm": "Maverick Capital",
+      "cik": "0000935674",
+      "manager": "Lee Ainslie"
+    },
+    {
+      "dataromaCode": "vg",
+      "displayName": "Viking Global Investors",
+      "firm": "Viking Global Investors",
+      "cik": "0001103804"
+    },
+    {
+      "dataromaCode": "VA",
+      "displayName": "ValueAct Capital",
+      "firm": "ValueAct Capital",
+      "cik": "0001349039"
+    },
+    {
+      "dataromaCode": "HC",
+      "displayName": "Li Lu - Himalaya Capital Management",
+      "firm": "Himalaya Capital Management",
+      "cik": "0001709323",
+      "manager": "Li Lu"
+    },
+    {
+      "dataromaCode": "GLRE",
+      "displayName": "David Einhorn - Greenlight Capital",
+      "firm": "Greenlight Capital",
+      "cik": "0001079114",
+      "manager": "David Einhorn"
+    },
+    {
+      "dataromaCode": "ic",
+      "displayName": "Carl Icahn - Icahn Capital Management",
+      "firm": "Icahn Capital Management",
+      "cik": "0000921669",
+      "manager": "Carl Icahn"
+    },
+    {
+      "dataromaCode": "fairx",
+      "displayName": "Bruce Berkowitz - Fairholme Capital",
+      "firm": "Fairholme Capital",
+      "cik": "0001055544",
+      "manager": "Bruce Berkowitz"
+    },
+    {
+      "dataromaCode": "HA",
+      "displayName": "Bill Nygren - Oakmark Funds",
+      "firm": "Oakmark Funds",
+      "cik": "0001001085",
+      "manager": "Bill Nygren"
+    },
+    {
+      "dataromaCode": "GFT",
+      "displayName": "Bill & Melinda Gates Foundation Trust",
+      "firm": "Bill & Melinda Gates Foundation Trust",
+      "cik": "0001166559"
+    },
+    {
+      "dataromaCode": "psc",
+      "displayName": "Bill Ackman - Pershing Square Capital Management",
+      "firm": "Pershing Square Capital Management",
+      "cik": "0001336528",
+      "manager": "Bill Ackman"
+    },
+    {
+      "dataromaCode": "PC",
+      "displayName": "Norbert Lou - Punch Card Management",
+      "firm": "Punch Card Management",
+      "cik": "0001802528",
+      "manager": "Norbert Lou"
+    },
+    {
+      "dataromaCode": "DCP",
+      "displayName": "Henry Ellenbogen - Durable Capital Partners",
+      "firm": "Durable Capital Partners",
+      "cik": "0001808303",
+      "manager": "Henry Ellenbogen"
+    },
+    {
+      "dataromaCode": "SA",
+      "displayName": "Christopher Bloomstran - Semper Augustus",
+      "firm": "Semper Augustus",
+      "cik": "0001773994",
+      "manager": "Christopher Bloomstran"
+    },
+    {
+      "dataromaCode": "SE",
+      "displayName": "Mason Hawkins - Southeastern Asset Management",
+      "firm": "Southeastern Asset Management",
+      "cik": "0000809660",
+      "manager": "Mason Hawkins"
+    },
+    {
+      "dataromaCode": "CCM",
+      "displayName": "Glenn Greenberg - Brave Warrior Advisors",
+      "firm": "Brave Warrior Advisors",
+      "cik": "0001553733",
+      "manager": "Glenn Greenberg"
+    },
+    {
+      "dataromaCode": "tp",
+      "displayName": "Daniel Loeb - Third Point",
+      "firm": "Third Point",
+      "cik": "0001040273",
+      "manager": "Daniel Loeb"
+    },
+    {
+      "dataromaCode": "BRK",
+      "displayName": "Warren Buffett - Berkshire Hathaway",
+      "firm": "Berkshire Hathaway",
+      "cik": "0001067983",
+      "manager": "Warren Buffett"
+    },
+    {
+      "dataromaCode": "LPC",
+      "displayName": "Stephen Mandel - Lone Pine Capital",
+      "firm": "Lone Pine Capital",
+      "cik": "0001061165",
+      "manager": "Stephen Mandel"
+    },
+    {
+      "dataromaCode": "AIM",
+      "displayName": "Alex Roepers - Atlantic Investment Management",
+      "firm": "Atlantic Investment Management",
+      "cik": "0001418814",
+      "manager": "Alex Roepers"
+    },
+    {
+      "dataromaCode": "VFC",
+      "displayName": "Valley Forge Capital Management",
+      "firm": "Valley Forge Capital Management",
+      "cik": "0001755028"
+    },
+    {
+      "dataromaCode": "WP",
+      "displayName": "David Rolfe - Wedgewood Partners",
+      "firm": "Wedgewood Partners",
+      "cik": "0000915191",
+      "manager": "David Rolfe"
+    },
+    {
+      "dataromaCode": "AM",
+      "displayName": "David Tepper - Appaloosa Management",
+      "firm": "Appaloosa Management",
+      "cik": "0001656454",
+      "manager": "David Tepper"
+    },
+    {
+      "dataromaCode": "TGM",
+      "displayName": "Chase Coleman - Tiger Global Management",
+      "firm": "Tiger Global Management",
+      "cik": "0001167483",
+      "manager": "Chase Coleman"
+    },
+    {
+      "dataromaCode": "ENG",
+      "displayName": "Glenn Welling - Engaged Capital",
+      "firm": "Engaged Capital",
+      "cik": "0001600746",
+      "manager": "Glenn Welling"
+    },
+    {
+      "dataromaCode": "CAS",
+      "displayName": "Clifford Sosin - CAS Investment Partners",
+      "firm": "CAS Investment Partners",
+      "cik": "0001732539",
+      "manager": "Clifford Sosin"
+    },
+    {
+      "dataromaCode": "AP",
+      "displayName": "AltaRock Partners",
+      "firm": "AltaRock Partners",
+      "cik": "0001631014"
+    },
+    {
+      "dataromaCode": "GC",
+      "displayName": "Francois Rochon - Giverny Capital",
+      "firm": "Giverny Capital",
+      "cik": "0001559770",
+      "manager": "Francois Rochon"
+    },
+    {
+      "dataromaCode": "oa",
+      "displayName": "Leon Cooperman",
+      "firm": "Leon Cooperman",
+      "cik": "0001536411"
+    },
+    {
+      "dataromaCode": "OCL",
+      "displayName": "Bryan Lawrence - Oakcliff Capital",
+      "firm": "Oakcliff Capital",
+      "cik": "0001766908",
+      "manager": "Bryan Lawrence"
+    },
+    {
+      "dataromaCode": "LMM",
+      "displayName": "Bill Miller - Miller Value Partners",
+      "firm": "Miller Value Partners",
+      "cik": "0001029160",
+      "manager": "Bill Miller"
+    },
+    {
+      "dataromaCode": "DA",
+      "displayName": "Pat Dorsey - Dorsey Asset Management",
+      "firm": "Dorsey Asset Management",
+      "cik": "0001697868",
+      "manager": "Pat Dorsey"
+    },
+    {
+      "dataromaCode": "tci",
+      "displayName": "Chris Hohn - TCI Fund Management",
+      "firm": "TCI Fund Management",
+      "cik": "0001647251",
+      "manager": "Chris Hohn"
+    },
+    {
+      "dataromaCode": "AKO",
+      "displayName": "AKO Capital",
+      "firm": "AKO Capital",
+      "cik": "0001547584"
+    },
+    {
+      "dataromaCode": "FS",
+      "displayName": "Terry Smith - Fundsmith",
+      "firm": "Fundsmith",
+      "cik": "0001655082",
+      "manager": "Terry Smith"
+    },
+    {
+      "dataromaCode": "FFH",
+      "displayName": "Prem Watsa - Fairfax Financial Holdings",
+      "firm": "Fairfax Financial Holdings",
+      "cik": "0000915191",
+      "manager": "Prem Watsa"
+    },
+    {
+      "dataromaCode": "HCM",
+      "displayName": "Hillman Capital Management",
+      "firm": "Hillman Capital Management",
+      "cik": "0001418814"
+    },
+    {
+      "dataromaCode": "TFP",
+      "displayName": "Triple Frond Partners",
+      "firm": "Triple Frond Partners",
+      "cik": "0001766908"
+    },
+    {
+      "dataromaCode": "MP",
+      "displayName": "Tom Bancroft - Makaira Partners",
+      "firm": "Makaira Partners",
+      "cik": "0001762824",
+      "manager": "Tom Bancroft"
+    },
+    {
+      "dataromaCode": "oc",
+      "displayName": "Howard Marks - Oaktree Capital Management",
+      "firm": "Oaktree Capital Management",
+      "cik": "0000949509",
+      "manager": "Howard Marks"
+    },
+    {
+      "dataromaCode": "RC",
+      "displayName": "Ruane Cunniff LP",
+      "firm": "Ruane Cunniff LP",
+      "cik": "0000727770"
+    },
+    {
+      "dataromaCode": "CM",
+      "displayName": "Greg Alexander - Conifer Management",
+      "firm": "Conifer Management",
+      "cik": "0001762824",
+      "manager": "Greg Alexander"
+    },
+    {
+      "dataromaCode": "AI",
+      "displayName": "John Rogers - Ariel Investments",
+      "firm": "Ariel Investments",
+      "cik": "0000919679",
+      "manager": "John Rogers"
+    },
+    {
+      "dataromaCode": "abc",
+      "displayName": "David Abrams - Abrams Capital Management",
+      "firm": "Abrams Capital Management",
+      "cik": "0001358706",
+      "manager": "David Abrams"
+    },
+    {
+      "dataromaCode": "AC",
+      "displayName": "Chuck Akre - Akre Capital Management",
+      "firm": "Akre Capital Management",
+      "cik": "0001112520",
+      "manager": "Chuck Akre"
+    },
+    {
+      "dataromaCode": "FE",
+      "displayName": "First Eagle Investment Management",
+      "firm": "First Eagle Investment Management",
+      "cik": "0001032220"
+    },
+    {
+      "dataromaCode": "BAUPOST",
+      "displayName": "Seth Klarman - Baupost Group",
+      "firm": "Baupost Group",
+      "cik": "0001061768",
+      "manager": "Seth Klarman"
+    },
+    {
+      "dataromaCode": "SP",
+      "displayName": "Dennis Hong - ShawSpring Partners",
+      "firm": "ShawSpring Partners",
+      "cik": "0001766908",
+      "manager": "Dennis Hong"
+    },
+    {
+      "dataromaCode": "CAU",
+      "displayName": "Sarah Ketterer - Causeway Capital Management",
+      "firm": "Causeway Capital Management",
+      "cik": "0001165791",
+      "manager": "Sarah Ketterer"
+    },
+    {
+      "dataromaCode": "WIM",
+      "displayName": "Wallace Weitz - Weitz Investment Management",
+      "firm": "Weitz Investment Management",
+      "cik": "0000883965",
+      "manager": "Wallace Weitz"
+    },
+    {
+      "dataromaCode": "DAC",
+      "displayName": "Dodge & Cox Funds",
+      "firm": "Dodge & Cox Funds",
+      "cik": "0001173484"
+    },
+    {
+      "dataromaCode": "ca",
+      "displayName": "Francis Chou - Chou Associates",
+      "firm": "Chou Associates",
+      "cik": "0001279936",
+      "manager": "Francis Chou"
+    },
+    {
+      "dataromaCode": "PTNT",
+      "displayName": "Samantha McLemore - Patient Capital Management",
+      "firm": "Patient Capital Management",
+      "cik": "0001802528",
+      "manager": "Samantha McLemore"
+    },
+    {
+      "dataromaCode": "pcm",
+      "displayName": "Polen Capital Management",
+      "firm": "Polen Capital Management",
+      "cik": "0001559770"
+    },
+    {
+      "dataromaCode": "PI",
+      "displayName": "Mohnish Pabrai - Pabrai Investments",
+      "firm": "Pabrai Investments",
+      "cik": "0001078784",
+      "manager": "Mohnish Pabrai"
+    },
+    {
+      "dataromaCode": "FPA",
+      "displayName": "First Pacific Advisors",
+      "firm": "First Pacific Advisors",
+      "cik": "0001377581"
+    },
+    {
+      "dataromaCode": "MPF",
+      "displayName": "Mairs & Power Funds",
+      "firm": "Mairs & Power Funds",
+      "cik": "0001040280"
+    },
+    {
+      "dataromaCode": "TA",
+      "displayName": "Third Avenue Management",
+      "firm": "Third Avenue Management",
+      "cik": "0001099281"
+    },
+    {
+      "dataromaCode": "EC",
+      "displayName": "John Armitage - Egerton Capital",
+      "firm": "Egerton Capital",
+      "cik": "0001580673",
+      "manager": "John Armitage"
+    },
+    {
+      "dataromaCode": "GR",
+      "displayName": "Thomas Russo - Gardner Russo & Quinn",
+      "firm": "Gardner Russo & Quinn",
+      "cik": "0001052108",
+      "manager": "Thomas Russo"
+    },
+    {
+      "dataromaCode": "VVP",
+      "displayName": "Vulcan Value Partners",
+      "firm": "Vulcan Value Partners",
+      "cik": "0001600641"
+    },
+    {
+      "dataromaCode": "RVC",
+      "displayName": "Robert Vinall - RV Capital GmbH",
+      "firm": "RV Capital GmbH",
+      "cik": "0001766908",
+      "manager": "Robert Vinall"
+    },
+    {
+      "dataromaCode": "GLC",
+      "displayName": "Josh Tarasoff - Greenlea Lane Capital",
+      "firm": "Greenlea Lane Capital",
+      "cik": "0001808303",
+      "manager": "Josh Tarasoff"
+    },
+    {
+      "dataromaCode": "KB",
+      "displayName": "Kahn Brothers Group",
+      "firm": "Kahn Brothers Group",
+      "cik": "0001040280"
+    },
+    {
+      "dataromaCode": "SSHFX",
+      "displayName": "Harry Burn - Sound Shore",
+      "firm": "Sound Shore",
+      "cik": "0001040280",
+      "manager": "Harry Burn"
+    },
+    {
+      "dataromaCode": "cc",
+      "displayName": "William Von Mueffling - Cantillon Capital Management",
+      "firm": "Cantillon Capital Management",
+      "cik": "0001279936",
+      "manager": "William Von Mueffling"
+    },
+    {
+      "dataromaCode": "DAV",
+      "displayName": "Christopher Davis - Davis Advisors",
+      "firm": "Davis Advisors",
+      "cik": "0001036325",
+      "manager": "Christopher Davis"
+    },
+    {
+      "dataromaCode": "TB",
+      "displayName": "Tweedy Browne",
+      "firm": "Tweedy Browne",
+      "cik": "0000732905"
+    },
+    {
+      "dataromaCode": "JIM",
+      "displayName": "Jensen Investment Management",
+      "firm": "Jensen Investment Management",
+      "cik": "0001040280"
+    },
+    {
+      "dataromaCode": "MKL",
+      "displayName": "Thomas Gayner - Markel Group",
+      "firm": "Markel Group",
+      "cik": "0001096343",
+      "manager": "Thomas Gayner"
+    },
+    {
+      "dataromaCode": "T",
+      "displayName": "Torray Funds",
+      "firm": "Torray Funds",
+      "cik": "0001040280"
+    },
+    {
+      "dataromaCode": "YAM",
+      "displayName": "Yacktman Asset Management",
+      "firm": "Yacktman Asset Management",
+      "cik": "0000905567"
+    },
+    {
+      "dataromaCode": "LT",
+      "displayName": "Lindsell Train",
+      "firm": "Lindsell Train",
+      "cik": "0001655082"
+    },
+    {
+      "dataromaCode": "PIM",
+      "displayName": "Richard Pzena - Pzena Investment Management",
+      "firm": "Pzena Investment Management",
+      "cik": "0001335259",
+      "manager": "Richard Pzena"
+    },
+    {
+      "dataromaCode": "MAVFX",
+      "displayName": "David Katz - Matrix Asset Advisors",
+      "firm": "Matrix Asset Advisors",
+      "cik": "0001040280",
+      "manager": "David Katz"
+    },
+    {
+      "dataromaCode": "OFALX",
+      "displayName": "Robert Olstein - Olstein Capital Management",
+      "firm": "Olstein Capital Management",
+      "cik": "0001040280",
+      "manager": "Robert Olstein"
+    },
+    {
+      "dataromaCode": "aq",
+      "displayName": "Guy Spier - Aquamarine Capital",
+      "firm": "Aquamarine Capital",
+      "cik": "0001358706",
+      "manager": "Guy Spier"
+    },
+    {
+      "dataromaCode": "GA",
+      "displayName": "Greenhaven Associates",
+      "firm": "Greenhaven Associates",
+      "cik": "0001040280"
+    },
+    {
+      "dataromaCode": "SAM",
+      "displayName": "Michael Burry - Scion Asset Management",
+      "firm": "Scion Asset Management",
+      "cik": "0001649339",
+      "manager": "Michael Burry"
+    }
+  ]
+}

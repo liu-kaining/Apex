@@ -1,0 +1,99 @@
+name: Apex Pipeline (Full)
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_etl:
+        description: "Skip data ETL (deploy web only)"
+        type: boolean
+        default: false
+      skip_deploy:
+        description: "Skip GitHub Pages deploy"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: apex-pipeline-full-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  data-etl:
+    name: Full ETL → R2
+    if: ${{ inputs.skip_etl != true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: pip install -r requirements.txt
+      - run: pytest data-pipelines/tests/ -q
+      - run: python data-pipelines/scripts/sync_dataroma_investors.py
+      - name: Fetch insider trades
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: python data-pipelines/scripts/fetch_fmp_insider.py
+      - name: Fetch 13F (matrix)
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: |
+          for i in 0 1 2 3; do
+            python data-pipelines/scripts/fetch_13f_sec.py --skip-cusip-map --shard-index $i --shard-count 4
+          done
+          python data-pipelines/scripts/rebuild_13f_index.py
+      - name: Map CUSIP → ticker
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: >
+          python data-pipelines/scripts/map_cusip.py
+          --enrich-13f-dir data-pipelines/output/13f/by_cik
+      - run: python data-pipelines/scripts/generate_signals.py
+      - run: python data-pipelines/scripts/generate_sp500_grid.py --all-tickers
+      - run: python data-pipelines/scripts/generate_ticker_timelines.py
+      - run: python data-pipelines/scripts/write_manifest.py
+      - name: Upload to R2
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+        run: python data-pipelines/scripts/upload_to_r2.py --skip-missing
+
+  deploy-web:
+    name: Build & Deploy (GitHub Pages)
+    needs: data-etl
+    if: >-
+      ${{ always() && inputs.skip_deploy != true &&
+          (inputs.skip_etl == true || needs.data-etl.result == 'success') }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web-app/package-lock.json
+      - name: Install dependencies
+        working-directory: web-app
+        run: npm ci
+      - name: Build static site
+        working-directory: web-app
+        env:
+          NEXT_PUBLIC_DATA_API_URL: ${{ vars.NEXT_PUBLIC_DATA_API_URL != '' && vars.NEXT_PUBLIC_DATA_API_URL || 'https://apex-data.thetamind.ai/v1' }}
+        run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web-app/out
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,11 @@
+{
+  "description": "S&P 500 subset for heatmap universe filter. Pipeline uses --all-tickers if you need every 13F ticker.",
+  "tickers": [
+    "AAPL", "MSFT", "AMZN", "NVDA", "GOOGL", "GOOG", "META", "BRK.B", "BRK.A", "V",
+    "UNH", "JNJ", "XOM", "JPM", "PG", "MA", "HD", "CVX", "MRK", "ABBV",
+    "KO", "PEP", "COST", "AVGO", "WMT", "MCD", "CSCO", "ACN", "TMO", "ABT",
+    "DHR", "LIN", "ADBE", "CRM", "NKE", "TXN", "NEE", "PM", "ORCL", "INTC",
+    "AMD", "QCOM", "IBM", "GE", "CAT", "BA", "DIS", "NFLX", "PYPL", "UBER",
+    "SHOP", "SQ", "PANW", "SNOW", "TSM", "BABA", "LLY", "PFE", "T", "VZ"
+  ]
+}

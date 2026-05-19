@@ -1,0 +1,83 @@
+name: Apex 13F Quarterly
+
+on:
+  schedule:
+    - cron: "0 0 16 2,5,8,11 *"
+      timezone: America/New_York
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: apex-13f-quarterly
+  cancel-in-progress: false
+
+jobs:
+  fetch-13f-matrix:
+    name: Fetch 13F (shard ${{ matrix.shard }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: pip install -r requirements.txt
+      - name: Fetch SEC 13F shard
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: >
+          python data-pipelines/scripts/fetch_13f_sec.py
+          --skip-cusip-map
+          --shard-index ${{ matrix.shard }}
+          --shard-count 4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thirteen-f-shard-${{ matrix.shard }}
+          path: data-pipelines/output/13f/by_cik/
+          retention-days: 7
+
+  enrich-and-grid:
+    name: CUSIP map + SP500 grid
+    needs: fetch-13f-matrix
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: thirteen-f-shard-*
+          path: data-pipelines/output/13f/by_cik
+          merge-multiple: true
+      - name: Map CUSIP → ticker
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: >
+          python data-pipelines/scripts/map_cusip.py
+          --enrich-13f-dir data-pipelines/output/13f/by_cik
+      - run: python data-pipelines/scripts/rebuild_13f_index.py
+      - run: python data-pipelines/scripts/generate_sp500_grid.py --all-tickers
+      - name: Upload 13F + grid to R2
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+        run: python data-pipelines/scripts/upload_to_r2.py --skip-missing
+      - uses: actions/cache/save@v4
+        with:
+          path: |
+            data-pipelines/output/13f
+            data-pipelines/output/sp500_grid.json
+            data-pipelines/config/cusip_ticker_cache.json
+          key: apex-13f-data
