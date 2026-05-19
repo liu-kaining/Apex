@@ -15,9 +15,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Apex — Resonance Signals",
-  description:
-    "Serverless investment research: superinvestor 13F × insider buy resonance.",
+  title: "Apex — 共振信号",
+  description: "超级投资者 13F × 内部人买入 · Serverless 投研看板",
 };
 
 export default function RootLayout({
@@ -26,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="zh-CN" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#0A0A0A] font-sans tabular-nums antialiased text-zinc-100`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans tabular-nums antialiased text-zinc-100`}
       >
         <SiteNav />
         {children}

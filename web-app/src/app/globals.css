@@ -3,10 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #f4f4f5;
-  --apex-signal: #00ff66;
-  --apex-consensus: #8b5cf6;
+  --background: #0c0f14;
+  --foreground: #e8eaed;
+  --card: rgba(22, 27, 38, 0.85);
+  --accent: #38bdf8;
+  --positive: #4ade80;
+  --consensus: #818cf8;
+  --muted: #94a3b8;
 }
 
 html {
@@ -16,7 +19,10 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-geist-sans), Inter, system-ui, sans-serif;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(129, 140, 248, 0.06), transparent);
+  font-family: var(--font-geist-sans), "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -28,5 +34,21 @@ body {
 
   .tabular-nums {
     font-variant-numeric: tabular-nums;
+  }
+
+  .bg-background {
+    background-color: var(--background);
+  }
+
+  .bg-card {
+    background-color: var(--card);
+  }
+
+  .text-accent {
+    color: var(--accent);
+  }
+
+  .text-positive {
+    color: var(--positive);
   }
 }

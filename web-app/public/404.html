@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>跳转中…</title>
+    <script>
+      (function () {
+        var p = location.pathname;
+        var m = p.match(/\/ticker\/([^/.]+)\/?$/i);
+        if (m && m[1]) {
+          location.replace(
+            "/ticker?t=" + encodeURIComponent(m[1].toUpperCase())
+          );
+          return;
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <p style="font-family: system-ui; padding: 2rem; color: #94a3b8">
+      页面不存在。<a href="/">返回首页</a>
+    </p>
+  </body>
+</html>

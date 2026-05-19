@@ -5,21 +5,7 @@ import { AlertCircle, Loader2, RefreshCw } from "lucide-react";
 import { SignalFeedCard } from "@/components/SignalFeedCard";
 import { FeedFetchError, fetchFeedToday } from "@/lib/feed-api";
 import type { FeedToday } from "@/types/feed";
-
-function formatLastUpdated(iso: string): string {
-  try {
-    return new Date(iso).toLocaleString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZoneName: "short",
-    });
-  } catch {
-    return iso;
-  }
-}
+import { formatZhDateTime } from "@/lib/zh";
 
 type LoadState = "loading" | "success" | "error";
 
@@ -52,7 +38,7 @@ export function FeedSection() {
             ? err.message
             : err instanceof Error
               ? err.message
-              : "Unable to load signals";
+              : "无法加载信号";
         setErrorMessage(message);
         setFeed(null);
         setState("error");
@@ -63,9 +49,9 @@ export function FeedSection() {
 
   if (state === "loading") {
     return (
-      <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 py-20 backdrop-blur-md">
-        <Loader2 className="h-8 w-8 animate-spin text-[#8B5CF6]" aria-hidden />
-        <p className="text-sm text-zinc-400">Loading resonance feed…</p>
+      <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-slate-700/50 bg-card py-20">
+        <Loader2 className="h-8 w-8 animate-spin text-sky-400" aria-hidden />
+        <p className="text-sm text-zinc-500">正在加载共振信号…</p>
       </div>
     );
   }
@@ -73,21 +59,24 @@ export function FeedSection() {
   if (state === "error") {
     return (
       <div
-        className="rounded-xl border border-red-500/20 bg-red-500/5 p-6 backdrop-blur-md"
+        className="rounded-xl border border-red-500/20 bg-red-500/5 p-6"
         role="alert"
       >
         <div className="flex items-start gap-3">
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
           <div className="min-w-0 flex-1">
-            <p className="font-medium text-zinc-100">Could not load feed</p>
-            <p className="mt-1 text-sm text-zinc-400">{errorMessage}</p>
+            <p className="font-medium text-zinc-100">无法加载信号流</p>
+            <p className="mt-1 text-sm text-zinc-500">{errorMessage}</p>
+            <p className="mt-2 text-xs text-zinc-600">
+              若提示跨域失败，请在 Cloudflare R2 配置 CORS 并刷新缓存。
+            </p>
             <button
               type="button"
               onClick={reload}
-              className="mt-4 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-zinc-200 transition-colors hover:border-zinc-600 hover:bg-zinc-900"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg border border-slate-600 bg-slate-800/80 px-3 py-2 text-sm text-zinc-200 transition-colors hover:bg-slate-700"
             >
               <RefreshCw className="h-4 w-4" />
-              Retry
+              重试
             </button>
           </div>
         </div>
@@ -101,25 +90,24 @@ export function FeedSection() {
     <>
       {feed?.lastUpdated && (
         <p className="mb-4 flex items-center gap-1.5 text-xs text-zinc-500">
-          Updated {formatLastUpdated(feed.lastUpdated)}
+          更新于 {formatZhDateTime(feed.lastUpdated)}
           {typeof feed.resonanceMatched === "number" && (
             <span className="text-zinc-600">
-              · {feed.resonanceMatched} resonance
-              {feed.resonanceMatched === 1 ? "" : "s"}
+              · {feed.resonanceMatched} 条强共振
             </span>
           )}
         </p>
       )}
 
-      <section className="space-y-4" aria-label="Today's signals">
+      <section className="space-y-4" aria-label="今日信号">
         {signals.map((signal) => (
           <SignalFeedCard key={signal.id} signal={signal} />
         ))}
       </section>
 
       {signals.length === 0 && (
-        <p className="rounded-xl border border-dashed border-white/10 py-16 text-center text-sm text-zinc-500">
-          No resonance signals today. Check back after market close.
+        <p className="rounded-xl border border-dashed border-slate-700/50 py-16 text-center text-sm text-zinc-500">
+          今日暂无符合条件的信号，可在收盘后刷新查看。
         </p>
       )}
     </>

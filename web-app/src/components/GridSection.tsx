@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { HeatmapGrid } from "@/components/HeatmapGrid";
 import { fetchSp500Grid, FeedFetchError } from "@/lib/data-api";
 import type { GridRow } from "@/types/grid";
+import { formatZhDateTime } from "@/lib/zh";
 
 export function GridSection() {
   const [rows, setRows] = useState<GridRow[]>([]);
@@ -21,7 +22,7 @@ export function GridSection() {
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
       setError(
-        err instanceof FeedFetchError ? err.message : "Failed to load heatmap",
+        err instanceof FeedFetchError ? err.message : "无法加载热力图",
       );
     } finally {
       setLoading(false);
@@ -36,7 +37,7 @@ export function GridSection() {
 
   if (loading) {
     return (
-      <p className="py-12 text-center text-sm text-zinc-500">Loading heatmap…</p>
+      <p className="py-12 text-center text-sm text-zinc-500">正在加载热力图…</p>
     );
   }
 
@@ -47,9 +48,9 @@ export function GridSection() {
         <button
           type="button"
           onClick={() => void load()}
-          className="mt-3 text-sm text-[#00FF66] underline"
+          className="mt-3 text-sm text-sky-400 underline"
         >
-          Retry
+          重试
         </button>
       </div>
     );
@@ -59,7 +60,7 @@ export function GridSection() {
     <>
       {lastUpdated && (
         <p className="mb-4 text-xs text-zinc-500">
-          Updated {new Date(lastUpdated).toLocaleString()}
+          更新于 {formatZhDateTime(lastUpdated)}
         </p>
       )}
       <HeatmapGrid rows={rows} />

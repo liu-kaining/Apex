@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { ConvictionTimeline } from "@/components/ConvictionTimeline";
 import { fetchTickerTimeline, FeedFetchError } from "@/lib/data-api";
 import type { TickerTimeline } from "@/types/timeline";
@@ -23,7 +24,7 @@ export function TickerTimelineSection({ ticker }: TickerTimelineSectionProps) {
       } catch (err) {
         if (err instanceof DOMException && err.name === "AbortError") return;
         setError(
-          err instanceof FeedFetchError ? err.message : "Failed to load timeline",
+          err instanceof FeedFetchError ? err.message : "无法加载时间轴",
         );
       } finally {
         setLoading(false);
@@ -39,20 +40,26 @@ export function TickerTimelineSection({ ticker }: TickerTimelineSectionProps) {
   }, [load]);
 
   if (loading) {
-    return <p className="py-8 text-center text-sm text-zinc-500">Loading…</p>;
+    return <p className="py-8 text-center text-sm text-zinc-500">加载中…</p>;
   }
 
   if (error || !data) {
     return (
       <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-6 text-center">
-        <p className="text-sm text-red-300">{error ?? "Not found"}</p>
+        <p className="text-sm text-red-300">{error ?? "未找到该标的"}</p>
+        <p className="mt-2 text-xs text-zinc-500">
+          可能尚未生成时间轴数据，请等待日频任务更新后重试。
+        </p>
         <button
           type="button"
           onClick={() => void load()}
-          className="mt-3 text-sm text-[#00FF66] underline"
+          className="mt-3 text-sm text-sky-400 underline"
         >
-          Retry
+          重试
         </button>
+        <Link href="/" className="mt-4 block text-sm text-zinc-500 hover:text-zinc-300">
+          返回信号流
+        </Link>
       </div>
     );
   }
@@ -60,8 +67,11 @@ export function TickerTimelineSection({ ticker }: TickerTimelineSectionProps) {
   return (
     <>
       <header className="mb-8">
-        <h1 className="text-2xl font-semibold text-zinc-100">{data.ticker}</h1>
-        <p className="text-sm text-zinc-400">{data.companyName}</p>
+        <Link href="/" className="text-xs text-zinc-500 hover:text-sky-400">
+          ← 返回信号流
+        </Link>
+        <h1 className="mt-2 text-2xl font-semibold text-zinc-100">{data.ticker}</h1>
+        <p className="text-sm text-zinc-500">{data.companyName}</p>
       </header>
       <ConvictionTimeline events={data.events} />
     </>

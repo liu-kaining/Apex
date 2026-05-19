@@ -9,14 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        apex: {
-          bg: "#0A0A0A",
-          signal: "#00FF66",
-          consensus: "#8B5CF6",
-        },
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        card: "var(--card)",
+        accent: "var(--accent)",
+        positive: "var(--positive)",
+        consensus: "var(--consensus)",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "Inter", "system-ui", "sans-serif"],
+        sans: [
+          "var(--font-geist-sans)",
+          "PingFang SC",
+          "Microsoft YaHei",
+          "system-ui",
+          "sans-serif",
+        ],
       },
     },
   },
