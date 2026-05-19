@@ -57,8 +57,10 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           pattern: thirteen-f-shard-*
-          path: data-pipelines/output/13f/by_cik
+          path: data-pipelines/output/13f/artifacts
           merge-multiple: true
+      - name: Merge 13F shard artifacts
+        run: python data-pipelines/scripts/merge_13f_shards.py --artifact-root data-pipelines/output/13f/artifacts
       - name: Map CUSIP → ticker
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}

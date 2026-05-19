@@ -215,6 +215,25 @@ class CusipTickerMapper:
         )
 
 
+def _load_portfolio_json(path: Path) -> dict[str, Any]:
+    text = path.read_text(encoding="utf-8")
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError as exc:
+        if "Extra data" not in str(exc):
+            raise
+        decoder = json.JSONDecoder()
+        data, end = decoder.raw_decode(text.lstrip())
+        logger.warning(
+            "Repaired %s: extra JSON after char %d (artifact merge glitch)",
+            path.name,
+            end,
+        )
+    if not isinstance(data, dict):
+        raise ValueError(f"{path} is not a JSON object")
+    return data
+
+
 def enrich_13f_directory(
     directory: Path,
     mapper: CusipTickerMapper,
@@ -223,8 +242,7 @@ def enrich_13f_directory(
     files = sorted(directory.glob("*.json"))
     cusips_mapped = 0
     for path in files:
-        with path.open(encoding="utf-8") as fh:
-            portfolio = json.load(fh)
+        portfolio = _load_portfolio_json(path)
         changed = False
         for holding in portfolio.get("holdings", []):
             cusip = holding.get("cusip")

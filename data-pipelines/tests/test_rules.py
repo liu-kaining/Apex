@@ -18,10 +18,19 @@ from generate_signals import (  # noqa: E402
     apply_resonance,
     filter_signals_by_insider_recency,
 )
+from map_cusip import _load_portfolio_json  # noqa: E402
 from pipeline_common import normalize_ticker_symbol  # noqa: E402
 from rule2 import classify_qoq, passes_rule2  # noqa: E402
 
 FIXTURES = Path(__file__).parent / "fixtures"
+
+
+class TestLoadPortfolioJson:
+    def test_repairs_extra_data_suffix(self, tmp_path: Path):
+        path = tmp_path / "0001.json"
+        path.write_text('{"cik":"1","holdings":[]}{"cik":"2"}', encoding="utf-8")
+        data = _load_portfolio_json(path)
+        assert data["cik"] == "1"
 
 
 class TestNormalizeTickerSymbol:
