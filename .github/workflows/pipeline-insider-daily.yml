@@ -41,7 +41,7 @@ jobs:
           count=$(find data-pipelines/output/13f/by_cik -name '*.json' 2>/dev/null | wc -l | tr -d ' ')
           echo "13F portfolio files on disk: $count"
           if [ "$count" -lt 10 ]; then
-            echo "::warning::Few or no 13F files — run Apex 13F Quarterly workflow first."
+            echo "::warning::Few or no 13F files — insider feed will still upload, but no STRONG_RESONANCE until you run Apex 13F Quarterly (or Full Pipeline) successfully."
           fi
       - name: Fetch insider trades
         env:

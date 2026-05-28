@@ -115,8 +115,17 @@ def main() -> int:
     investors = load_investors()
     portfolios = load_portfolios(args.dir_13f, investors)
     if not portfolios:
-        logger.error("No 13F portfolios in %s", args.dir_13f)
-        return 1
+        if args.o.is_file():
+            logger.warning(
+                "No 13F portfolios in %s — keeping existing grid at %s",
+                args.dir_13f,
+                args.o,
+            )
+            return 0
+        logger.warning(
+            "No 13F portfolios in %s — writing empty grid (run 13F Quarterly first).",
+            args.dir_13f,
+        )
 
     universe: set[str] = set()
     if not args.all_tickers:

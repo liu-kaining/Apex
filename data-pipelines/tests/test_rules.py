@@ -141,3 +141,21 @@ class TestRule4Resonance:
         }
         out = filter_signals_by_insider_recency(feed)
         assert out["signals"] == []
+
+    def test_resonance_skipped_with_empty_index(self):
+        feed = {
+            "signals": [
+                {
+                    "id": "AAPL-1",
+                    "ticker": "AAPL",
+                    "companyName": "Apple",
+                    "signalType": "INSIDER_BUY",
+                    "superinvestorCount": 0,
+                    "insiderActions": {"recentBuyers": ["X"], "totalAmountUsd": 1e6, "date": "2026-05-18"},
+                    "tags": [],
+                }
+            ]
+        }
+        out = apply_resonance(feed, {})
+        assert out["signals"][0]["signalType"] == "INSIDER_BUY"
+        assert out["resonanceMatched"] == 0

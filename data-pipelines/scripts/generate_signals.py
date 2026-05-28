@@ -204,22 +204,28 @@ def main(argv: list[str] | None = None) -> int:
         logger.error("Feed not found: %s — run fetch_fmp_insider.py first.", args.feed)
         return 1
 
-    if not args.thirteen_f_dir.exists():
-        logger.error("13F directory not found: %s — run fetch_13f_sec.py first.", args.thirteen_f_dir)
-        return 1
-
     feed = load_feed(args.feed)
     feed = filter_signals_by_insider_recency(feed)
-    investors = load_investors()
-    portfolios = load_13f_portfolios(args.thirteen_f_dir, investors)
 
-    if not portfolios:
-        logger.error("No 13F portfolio files found under %s", args.thirteen_f_dir)
-        return 1
-
-    logger.info("Loaded %d 13F portfolios", len(portfolios))
-    ticker_index = build_ticker_index(portfolios)
-    logger.info("Built ticker index with %d symbols", len(ticker_index))
+    ticker_index: dict[str, list[dict[str, Any]]] = {}
+    if not args.thirteen_f_dir.exists():
+        logger.warning(
+            "13F directory missing (%s) — skipping resonance join; "
+            "all signals remain INSIDER_BUY. Run fetch_13f_sec.py or 13F Quarterly.",
+            args.thirteen_f_dir,
+        )
+    else:
+        investors = load_investors()
+        portfolios = load_13f_portfolios(args.thirteen_f_dir, investors)
+        if not portfolios:
+            logger.warning(
+                "No 13F portfolio files under %s — skipping resonance join.",
+                args.thirteen_f_dir,
+            )
+        else:
+            logger.info("Loaded %d 13F portfolios", len(portfolios))
+            ticker_index = build_ticker_index(portfolios)
+            logger.info("Built ticker index with %d symbols", len(ticker_index))
 
     updated = apply_resonance(feed, ticker_index)
     args.output.parent.mkdir(parents=True, exist_ok=True)
